@@ -46,7 +46,7 @@ export const questionBank: Question[] = [
     id: '5',
     type: 'idiom',
     question: '「古人の○○」の○○に入る漢字はどれですか？',
-    choices: ['糟魄	', '正義', '淪落', '琥珀'],
+    choices: ['糟魄', '正義', '淪落', '琥珀'],
     correctAnswer: '糟魄',
     explanation: '古人の糟魄（こじんのそうはく）は、言葉や文章では、聖人や賢人の本質を伝えるのは到底不可能であるということ。今日伝わる昔の聖賢の言葉や書物は残りかすのようなものであるという意',
     difficulty: 4
