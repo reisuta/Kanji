@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useQuiz } from '@/hooks/useQuiz';
-import { getRandomQuestions } from '@/data/questions';
+import { defaultSelector } from '@/services/questionSelector';
 import StartScreen from '@/components/StartScreen';
 import QuestionCard from '@/components/QuestionCard';
 import ResultCard from '@/components/ResultCard';
@@ -11,7 +11,7 @@ import ExplanationModal from '@/components/ExplanationModal';
 
 export default function Home() {
   const [gameState, setGameState] = useState<'start' | 'playing' | 'finished'>('start');
-  const [questions] = useState(() => getRandomQuestions(5));
+  const [questions] = useState(() => defaultSelector.getRandomQuestions({ count: 10 }));
   const [showExplanation, setShowExplanation] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
