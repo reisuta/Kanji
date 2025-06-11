@@ -1,0 +1,454 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=Metal+Mania&family=Eater&family=Chonburi&family=Freddy&family=Griffy&display=swap');
+
+/* Black Metal Style Custom Fonts */
+.font-horror-title {
+  font-family: 'Nosifer', 'Creepster', cursive;
+  text-shadow: 
+    0 0 5px #ff0000,
+    0 0 10px #ff0000,
+    0 0 20px #ff0000,
+    0 0 40px #ff0000,
+    2px 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 0.1em;
+  transform: perspective(300px) rotateX(15deg);
+}
+
+.font-horror-text {
+  font-family: 'Metal Mania', 'Butcherman', cursive;
+  text-shadow: 
+    0 0 3px rgba(255,0,0,0.5),
+    1px 1px 2px rgba(0,0,0,0.8);
+  letter-spacing: 0.05em;
+}
+
+.font-horror-subtitle {
+  font-family: 'Eater', cursive;
+  text-shadow: 
+    0 0 5px rgba(255,165,0,0.8),
+    1px 1px 3px rgba(0,0,0,0.9);
+  letter-spacing: 0.08em;
+}
+
+/* Creepy animations */
+@keyframes creepyGlow {
+  0%, 100% { 
+    text-shadow: 
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 0 20px #ff0000,
+      2px 2px 4px rgba(0,0,0,0.8);
+  }
+  50% { 
+    text-shadow: 
+      0 0 10px #ff6600,
+      0 0 20px #ff6600,
+      0 0 30px #ff6600,
+      2px 2px 4px rgba(0,0,0,0.8);
+  }
+}
+
+@keyframes creepyShake {
+  0%, 100% { transform: perspective(300px) rotateX(15deg) translateX(0); }
+  10% { transform: perspective(300px) rotateX(15deg) translateX(-1px) rotateZ(-0.5deg); }
+  20% { transform: perspective(300px) rotateX(15deg) translateX(1px) rotateZ(0.5deg); }
+  30% { transform: perspective(300px) rotateX(15deg) translateX(-1px) rotateZ(-0.5deg); }
+  40% { transform: perspective(300px) rotateX(15deg) translateX(1px) rotateZ(0.5deg); }
+  50% { transform: perspective(300px) rotateX(15deg) translateX(-0.5px) rotateZ(-0.25deg); }
+  60% { transform: perspective(300px) rotateX(15deg) translateX(0.5px) rotateZ(0.25deg); }
+  70% { transform: perspective(300px) rotateX(15deg) translateX(-0.5px) rotateZ(-0.25deg); }
+  80% { transform: perspective(300px) rotateX(15deg) translateX(0.5px) rotateZ(0.25deg); }
+  90% { transform: perspective(300px) rotateX(15deg) translateX(-0.25px) rotateZ(-0.125deg); }
+}
+
+@keyframes creepyPulse {
+  0%, 100% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.02);
+    filter: brightness(1.2) contrast(1.1);
+  }
+}
+
+@keyframes bloodDrip {
+  0% { 
+    text-shadow: 
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 2px 0 #8B0000,
+      0 4px 0 #660000;
+  }
+  50% { 
+    text-shadow: 
+      0 0 8px #ff0000,
+      0 0 15px #ff0000,
+      0 3px 0 #8B0000,
+      0 6px 0 #660000,
+      0 9px 0 #440000;
+  }
+  100% { 
+    text-shadow: 
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 2px 0 #8B0000,
+      0 4px 0 #660000;
+  }
+}
+
+.animate-creepy-glow {
+  animation: creepyGlow 3s ease-in-out infinite;
+}
+
+.animate-creepy-shake {
+  animation: creepyShake 0.8s ease-in-out infinite;
+}
+
+.animate-creepy-pulse {
+  animation: creepyPulse 2s ease-in-out infinite;
+}
+
+.animate-blood-drip {
+  animation: bloodDrip 4s ease-in-out infinite;
+}
+
+/* チカチカ演出（ゆっくり版） */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  20% { opacity: 0.9; }
+  40% { opacity: 0.8; }
+  60% { opacity: 0.9; }
+  80% { opacity: 0.85; }
+}
+
+@keyframes gentle-flicker {
+  0%, 100% { opacity: 1; brightness: 1; }
+  25% { opacity: 0.7; brightness: 0.8; }
+  50% { opacity: 0.9; brightness: 1.1; }
+  75% { opacity: 0.8; brightness: 0.9; }
+}
+
+@keyframes intense-flicker {
+  0%, 100% { opacity: 1; brightness: 1; }
+  10% { opacity: 0.4; brightness: 0.5; }
+  20% { opacity: 1; brightness: 1.2; }
+  30% { opacity: 0.6; brightness: 0.7; }
+  40% { opacity: 1; brightness: 1; }
+  50% { opacity: 0.3; brightness: 0.4; }
+  60% { opacity: 1; brightness: 1.1; }
+  70% { opacity: 0.5; brightness: 0.6; }
+  80% { opacity: 1; brightness: 1; }
+  90% { opacity: 0.7; brightness: 0.8; }
+}
+
+@keyframes screen-glitch {
+  0%, 100% { 
+    transform: translateX(0);
+    filter: hue-rotate(0deg);
+  }
+  10% { 
+    transform: translateX(-2px);
+    filter: hue-rotate(30deg);
+  }
+  20% { 
+    transform: translateX(2px);
+    filter: hue-rotate(-30deg);
+  }
+  30% { 
+    transform: translateX(-1px);
+    filter: hue-rotate(60deg);
+  }
+  40% { 
+    transform: translateX(1px);
+    filter: hue-rotate(-60deg);
+  }
+  50% { 
+    transform: translateX(-3px);
+    filter: hue-rotate(90deg);
+  }
+  60% { 
+    transform: translateX(0);
+    filter: hue-rotate(0deg);
+  }
+  70% { 
+    transform: translateX(-1px);
+    filter: hue-rotate(45deg);
+  }
+  80% { 
+    transform: translateX(2px);
+    filter: hue-rotate(-45deg);
+  }
+  90% { 
+    transform: translateX(-2px);
+    filter: hue-rotate(15deg);
+  }
+}
+
+.animate-flicker {
+  animation: flicker 5s infinite;
+}
+
+.animate-gentle-flicker {
+  animation: gentle-flicker 4s infinite;
+}
+
+.animate-intense-flicker {
+  animation: intense-flicker 3s infinite;
+}
+
+.animate-screen-glitch {
+  animation: screen-glitch 0.5s infinite;
+}
+
+/* より読みにくいフォント */
+.font-extreme-horror {
+  font-family: 'Chonburi', 'Griffy', cursive;
+  text-shadow: 
+    0 0 3px #ff0000,
+    0 0 6px #ff0000,
+    0 0 9px #ff0000,
+    2px 2px 4px rgba(0,0,0,0.9),
+    -1px -1px 2px rgba(255,0,0,0.3);
+  letter-spacing: 0.15em;
+  font-weight: 900;
+  transform: perspective(300px) rotateX(10deg) skewX(-5deg);
+}
+
+.font-unreadable-horror {
+  font-family: 'Nosifer', 'Freddy', cursive;
+  text-shadow: 
+    0 0 5px #ff0000,
+    0 0 10px #ff3300,
+    0 0 15px #ff6600,
+    3px 3px 6px rgba(0,0,0,0.8),
+    -2px -2px 4px rgba(255,0,0,0.4);
+  letter-spacing: 0.2em;
+  transform: perspective(400px) rotateX(20deg) rotateY(-10deg) skewX(-8deg);
+  filter: blur(0.5px);
+}
+
+/* 白フラッシュ効果 */
+@keyframes white-flash {
+  0%, 90%, 100% { 
+    color: inherit;
+    text-shadow: inherit;
+  }
+  95% { 
+    color: #ffffff;
+    text-shadow: 
+      0 0 10px #ffffff,
+      0 0 20px #ffffff,
+      0 0 30px #ffffff,
+      0 0 40px #ffffff;
+  }
+}
+
+.animate-white-flash {
+  animation: white-flash 8s infinite;
+}
+
+/* 白ベース + 不気味な花模様 */
+.white-creepy-theme {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  color: #2d3748;
+  border-color: #e2e8f0;
+  position: relative;
+}
+
+.white-creepy-theme::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    /* 不気味な花の形状 - より多くのバリエーション */
+    radial-gradient(ellipse 15px 8px at 25% 30%, rgba(139, 0, 0, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 8px 15px at 25% 30%, rgba(139, 0, 0, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 12px 6px at 25% 35%, rgba(75, 0, 130, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 6px 12px at 30% 30%, rgba(75, 0, 130, 0.10) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 18px 10px at 75% 70%, rgba(139, 0, 0, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 10px 18px at 75% 70%, rgba(139, 0, 0, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 14px 7px at 70% 75%, rgba(75, 0, 130, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 7px 14px at 75% 65%, rgba(75, 0, 130, 0.08) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 12px 6px at 15% 85%, rgba(139, 0, 0, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 6px 12px at 15% 85%, rgba(139, 0, 0, 0.08) 0%, transparent 60%),
+    
+    radial-gradient(ellipse 16px 8px at 85% 15%, rgba(75, 0, 130, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 8px 16px at 85% 15%, rgba(75, 0, 130, 0.06) 0%, transparent 60%),
+    
+    /* 追加の花模様 */
+    radial-gradient(ellipse 20px 12px at 50% 10%, rgba(139, 0, 0, 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 12px 20px at 50% 10%, rgba(139, 0, 0, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 10px 5px at 45% 15%, rgba(75, 0, 130, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 5px 10px at 55% 12%, rgba(75, 0, 130, 0.07) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 14px 9px at 90% 45%, rgba(139, 0, 0, 0.11) 0%, transparent 60%),
+    radial-gradient(ellipse 9px 14px at 90% 45%, rgba(139, 0, 0, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 8px 4px at 85% 50%, rgba(75, 0, 130, 0.06) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 11px 7px at 10% 50%, rgba(139, 0, 0, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 7px 11px at 10% 50%, rgba(139, 0, 0, 0.07) 0%, transparent 60%),
+    
+    radial-gradient(ellipse 13px 6px at 40% 90%, rgba(75, 0, 130, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 6px 13px at 40% 90%, rgba(75, 0, 130, 0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 9px 4px at 45% 85%, rgba(139, 0, 0, 0.08) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 17px 11px at 65% 25%, rgba(139, 0, 0, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 11px 17px at 65% 25%, rgba(139, 0, 0, 0.09) 0%, transparent 60%),
+    
+    /* さらに多くの花模様 */
+    radial-gradient(ellipse 22px 14px at 5% 20%, rgba(139, 0, 0, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 14px 22px at 5% 20%, rgba(139, 0, 0, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 11px 6px at 8% 25%, rgba(75, 0, 130, 0.08) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 19px 12px at 95% 30%, rgba(139, 0, 0, 0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 12px 19px at 95% 30%, rgba(139, 0, 0, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 8px 5px at 92% 35%, rgba(75, 0, 130, 0.07) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 16px 10px at 30% 5%, rgba(139, 0, 0, 0.11) 0%, transparent 60%),
+    radial-gradient(ellipse 10px 16px at 30% 5%, rgba(139, 0, 0, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 7px 4px at 35% 8%, rgba(75, 0, 130, 0.06) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 18px 11px at 70% 95%, rgba(75, 0, 130, 0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 11px 18px at 70% 95%, rgba(75, 0, 130, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 9px 5px at 75% 92%, rgba(139, 0, 0, 0.09) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 15px 9px at 55% 50%, rgba(139, 0, 0, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 9px 15px at 55% 50%, rgba(139, 0, 0, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 6px 3px at 58% 53%, rgba(75, 0, 130, 0.06) 0%, transparent 70%),
+    
+    radial-gradient(ellipse 21px 13px at 12% 65%, rgba(75, 0, 130, 0.11) 0%, transparent 65%),
+    radial-gradient(ellipse 13px 21px at 12% 65%, rgba(75, 0, 130, 0.08) 0%, transparent 65%),
+    
+    radial-gradient(ellipse 17px 10px at 88% 65%, rgba(139, 0, 0, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 10px 17px at 88% 65%, rgba(139, 0, 0, 0.09) 0%, transparent 60%),
+    
+    radial-gradient(ellipse 14px 8px at 45% 25%, rgba(139, 0, 0, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 8px 14px at 45% 25%, rgba(139, 0, 0, 0.06) 0%, transparent 60%),
+    
+    radial-gradient(ellipse 12px 7px at 25% 75%, rgba(75, 0, 130, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 7px 12px at 25% 75%, rgba(75, 0, 130, 0.05) 0%, transparent 65%),
+    
+    /* 蜘蛛の巣のような模様 */
+    conic-gradient(from 0deg at 35% 60%, transparent 0deg, rgba(139, 0, 0, 0.05) 30deg, transparent 60deg, rgba(139, 0, 0, 0.05) 90deg, transparent 120deg, rgba(139, 0, 0, 0.05) 150deg, transparent 180deg),
+    conic-gradient(from 45deg at 80% 80%, transparent 0deg, rgba(75, 0, 130, 0.04) 45deg, transparent 90deg, rgba(75, 0, 130, 0.04) 135deg, transparent 180deg),
+    
+    /* 血の滴のような模様 */
+    radial-gradient(circle 3px at 20% 40%, rgba(139, 0, 0, 0.15), transparent),
+    radial-gradient(circle 2px at 22% 42%, rgba(139, 0, 0, 0.12), transparent),
+    radial-gradient(circle 4px at 60% 15%, rgba(139, 0, 0, 0.13), transparent),
+    radial-gradient(circle 2px at 62% 17%, rgba(139, 0, 0, 0.10), transparent),
+    radial-gradient(circle 3px at 15% 75%, rgba(75, 0, 130, 0.11), transparent),
+    radial-gradient(circle 5px at 85% 55%, rgba(139, 0, 0, 0.14), transparent),
+    radial-gradient(circle 2px at 87% 57%, rgba(139, 0, 0, 0.09), transparent),
+    radial-gradient(circle 4px at 40% 80%, rgba(75, 0, 130, 0.12), transparent),
+    radial-gradient(circle 3px at 42% 82%, rgba(75, 0, 130, 0.09), transparent),
+    radial-gradient(circle 5px at 78% 25%, rgba(139, 0, 0, 0.13), transparent),
+    radial-gradient(circle 2px at 80% 27%, rgba(139, 0, 0, 0.10), transparent),
+    
+    /* ガラスのひび割れ模様 */
+    linear-gradient(23deg, transparent 30%, rgba(139, 0, 0, 0.08) 30.5%, rgba(139, 0, 0, 0.08) 31%, transparent 31.5%),
+    linear-gradient(67deg, transparent 45%, rgba(75, 0, 130, 0.06) 45.5%, rgba(75, 0, 130, 0.06) 46%, transparent 46.5%),
+    linear-gradient(134deg, transparent 60%, rgba(139, 0, 0, 0.07) 60.5%, rgba(139, 0, 0, 0.07) 61%, transparent 61.5%),
+    linear-gradient(-34deg, transparent 25%, rgba(75, 0, 130, 0.05) 25.5%, rgba(75, 0, 130, 0.05) 26%, transparent 26.5%),
+    linear-gradient(156deg, transparent 70%, rgba(139, 0, 0, 0.06) 70.5%, rgba(139, 0, 0, 0.06) 71%, transparent 71.5%),
+    linear-gradient(-78deg, transparent 15%, rgba(75, 0, 130, 0.04) 15.5%, rgba(75, 0, 130, 0.04) 16%, transparent 16.5%),
+    linear-gradient(89deg, transparent 55%, rgba(139, 0, 0, 0.05) 55.5%, rgba(139, 0, 0, 0.05) 56%, transparent 56.5%),
+    linear-gradient(-12deg, transparent 80%, rgba(75, 0, 130, 0.04) 80.5%, rgba(75, 0, 130, 0.04) 81%, transparent 81.5%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.creepy-white-text {
+  color: #1a202c;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.creepy-white-border {
+  border-color: #cbd5e0;
+}
+
+/* 生気がない灰色テイスト（他の部分用） */
+.dead-gray-theme {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 50%, #2d3748 100%);
+  color: #a0aec0;
+  border-color: #4a5568;
+}
+
+.dead-gray-text {
+  color: #718096;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.dead-gray-border {
+  border-color: #4a5568;
+}
+
+/* ページ遷移アニメーション */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-fade-out-down {
+  animation: fadeOutDown 0.5s ease-in;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.6s ease-out;
+}
+
+.animate-slide-out-left {
+  animation: slideOutToLeft 0.5s ease-in;
+}
