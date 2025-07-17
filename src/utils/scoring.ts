@@ -5,13 +5,17 @@ export const calculateScore = (
   questions: Question[]
 ): number => {
   let correct = 0;
-  
+
   for (let i = 0; i < Math.min(userAnswers.length, questions.length); i++) {
-    if (userAnswers[i] === questions[i].correctAnswer) {
+    const isCorrect = Array.isArray(questions[i].correctAnswer)
+      ? questions[i].correctAnswer.includes(userAnswers[i])
+      : userAnswers[i] === questions[i].correctAnswer;
+
+    if (isCorrect) {
       correct++;
     }
   }
-  
+
   return Math.round((correct / questions.length) * 100);
 };
 

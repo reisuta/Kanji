@@ -5,7 +5,7 @@ export interface Question {
   type: QuestionType;
   question: string;
   choices?: string[];
-  correctAnswer: string;
+  correctAnswer: string | string[];
   explanation?: string;
   difficulty: number;
 }

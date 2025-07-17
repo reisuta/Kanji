@@ -49,7 +49,9 @@ export default function ExplanationModal({
         <div className="p-6 space-y-8">
           {questions.map((question, index) => {
             const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === question.correctAnswer;
+            const isCorrect = Array.isArray(question.correctAnswer)
+              ? question.correctAnswer.includes(userAnswer)
+              : userAnswer === question.correctAnswer;
 
             return (
               <div
@@ -89,9 +91,11 @@ export default function ExplanationModal({
                 <div className="grid gap-3 mb-4">
                   {question.choices?.map((choice, choiceIndex) => {
                     const isUserChoice = choice === userAnswer;
-                    const isCorrectChoice = choice === question.correctAnswer;
+                    const isCorrectChoice = Array.isArray(question.correctAnswer)
+                      ? question.correctAnswer.includes(choice)
+                      : choice === question.correctAnswer;
                     let choiceClass = 'bg-gray-800 border-gray-600 text-gray-300';
-                    
+
                     if (isCorrectChoice) {
                       choiceClass = 'bg-green-800/40 border-green-500 text-green-200';
                     } else if (isUserChoice && !isCorrect) {

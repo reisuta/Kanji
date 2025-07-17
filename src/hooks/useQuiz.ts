@@ -17,7 +17,9 @@ export const useQuiz = (questions: Question[]) => {
   const submitAnswer = useCallback((answer: string) => {
     setQuizState(prev => {
       const newUserAnswers = [...prev.userAnswers, answer];
-      const isCorrect = answer === currentQuestion.correctAnswer;
+      const isCorrect = Array.isArray(currentQuestion.correctAnswer)
+        ? currentQuestion.correctAnswer.includes(answer)
+        : answer === currentQuestion.correctAnswer;
       const newScore = prev.score + (isCorrect ? 1 : 0);
       const nextIndex = prev.currentQuestionIndex + 1;
       const isCompleted = nextIndex >= prev.questions.length;
