@@ -69,6 +69,13 @@ export default function StartScreen({ onStart }: StartScreenProps) {
         >
           深淵に堕ちよ
         </button>
+
+        <a
+          href="/vocabulary"
+          className="block w-full bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 text-gray-100 font-unreadable-horror py-4 px-6 rounded-xl hover:from-gray-600 hover:via-gray-700 hover:to-gray-600 transition-all duration-500 transform hover:scale-105 shadow-xl shadow-gray-900/50 text-lg tracking-wide border border-gray-500/50 animate-flicker text-center"
+        >
+          語彙を学ぶ
+        </a>
         
         <div className="text-sm text-red-400 flex items-center justify-center space-x-2 font-extreme-horror animate-flicker">
           <div className="w-1 h-1 bg-red-500 rounded-full animate-pulse"></div>
