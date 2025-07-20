@@ -134,8 +134,16 @@ export class QuestionSelector {
   /**
    * 難易度別に問題を取得（インデックス使用）
    */
-  getQuestionsByDifficulty(difficulty: number): Question[] {
-    return [...(this.difficultyMap.get(difficulty) || [])];
+  getQuestionsByDifficulty(difficulty: number | { min: number; max: number }): Question[] {
+    if (typeof difficulty === 'number') {
+      return [...(this.difficultyMap.get(difficulty) || [])];
+    } else {
+      const questions: Question[] = [];
+      for (let d = difficulty.min; d <= difficulty.max; d++) {
+        questions.push(...(this.difficultyMap.get(d) || []));
+      }
+      return questions;
+    }
   }
 
   /**
