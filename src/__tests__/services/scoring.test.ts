@@ -81,11 +81,11 @@ describe('Scoring Utils', () => {
 
   describe('getScoreMessage', () => {
     it('should return appropriate message for each grade', () => {
-      expect(getScoreMessage(95)).toContain('素晴らしい');
-      expect(getScoreMessage(85)).toContain('とても良い');
-      expect(getScoreMessage(75)).toContain('良い成績');
-      expect(getScoreMessage(65)).toContain('合格ライン');
-      expect(getScoreMessage(50)).toContain('もう一度挑戦');
+      expect(getScoreMessage(95)).toContain('汝は深淵の奥義を極めし者');
+      expect(getScoreMessage(85)).toContain('闇の知識に染まりし者よ');
+      expect(getScoreMessage(75)).toContain('呪いの文字に魅入られし者よ');
+      expect(getScoreMessage(65)).toContain('地獄の門は開かれた');
+      expect(getScoreMessage(50)).toContain('絶望の淵に堕ちよ');
     });
   });
 
