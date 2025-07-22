@@ -11,7 +11,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lhci": "lhci autorun",
+    "lhci:mobile": "lhci autorun --preset=mobile",
+    "lhci:desktop": "lhci autorun --preset=desktop"
   },
   "dependencies": {
     "@next/font": "^14.2.15",
@@ -21,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@lhci/cli": "^0.12.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

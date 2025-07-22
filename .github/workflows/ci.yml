@@ -81,3 +81,38 @@ jobs:
       uses: davelosert/vitest-coverage-report-action@v2
       with:
         json-summary-path: coverage/coverage-summary.json
+
+  performance:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build application
+        run: yarn build
+
+      - name: Start server
+        run: |
+          yarn start &
+          sleep 10
+        env:
+          CI: true
+
+      - name: Run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.12.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
