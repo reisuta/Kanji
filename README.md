@@ -20,6 +20,45 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Performance Testing
+
+This project includes Lighthouse CI for performance monitoring:
+
+### Local Performance Testing
+
+1. Build the application:
+```bash
+yarn build
+```
+
+2. Start the production server:
+```bash
+yarn start
+```
+
+3. In another terminal, run Lighthouse CI:
+```bash
+# Install dependencies first
+yarn install
+
+# Run Lighthouse CI (both mobile and desktop)
+yarn lhci
+
+# Mobile-specific test
+yarn lhci:mobile
+
+# Desktop-specific test  
+yarn lhci:desktop
+```
+
+### Available Performance Scripts
+
+- `yarn lhci` - Run Lighthouse CI with default settings
+- `yarn lhci:mobile` - Mobile-focused performance testing
+- `yarn lhci:desktop` - Desktop-focused performance testing
+
+Performance reports will be generated locally and can be viewed in your terminal.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
