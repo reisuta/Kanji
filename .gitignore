@@ -42,3 +42,11 @@ next-env.d.ts
 
 # lighthouse ci
 .lighthouseci/
+
+# rescript
+lib/
+.bsb.lock
+*.res.mjs
+
+# serena mcp local state
+.serena/
