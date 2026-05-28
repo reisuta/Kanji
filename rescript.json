@@ -1,0 +1,19 @@
+{
+  "name": "kanken-app",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "esmodule",
+      "in-source": true
+    }
+  ],
+  "suffix": ".res.mjs",
+  "dependencies": ["@rescript/core"],
+  "compiler-flags": ["-open RescriptCore"],
+  "jsx": { "version": 4 }
+}
