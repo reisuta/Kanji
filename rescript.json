@@ -13,7 +13,7 @@
     }
   ],
   "suffix": ".res.mjs",
-  "dependencies": ["@rescript/core"],
+  "dependencies": ["@rescript/core", "@rescript/react"],
   "compiler-flags": ["-open RescriptCore"],
-  "jsx": { "version": 4 }
+  "jsx": { "version": 4, "mode": "automatic" }
 }
