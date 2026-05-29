@@ -2,6 +2,11 @@
 
 import { QuizResult } from '@/types/question';
 import { getScoreGrade, getScoreMessage, formatTime } from '@/utils/scoring';
+import {
+  getGradeColor,
+  getGradeBg,
+  getGradeTitle,
+} from './GradePresentation.res.mjs';
 
 interface ResultCardProps {
   result: QuizResult;
@@ -12,39 +17,6 @@ interface ResultCardProps {
 export default function ResultCard({ result, onRestart, onShowExplanation }: ResultCardProps) {
   const grade = getScoreGrade(result.score);
   const message = getScoreMessage(result.score);
-
-  const getGradeColor = (grade: string) => {
-    switch (grade) {
-      case 'S': return 'text-amber-400';
-      case 'A': return 'text-green-400';
-      case 'B': return 'text-blue-400';
-      case 'C': return 'text-orange-400';
-      case 'D': return 'text-red-400';
-      default: return 'text-gray-400';
-    }
-  };
-
-  const getGradeBg = (grade: string) => {
-    switch (grade) {
-      case 'S': return 'bg-gradient-to-br from-amber-900/60 to-yellow-900/60 border-amber-500/50';
-      case 'A': return 'bg-gradient-to-br from-green-900/60 to-emerald-900/60 border-green-500/50';
-      case 'B': return 'bg-gradient-to-br from-blue-900/60 to-cyan-900/60 border-blue-500/50';
-      case 'C': return 'bg-gradient-to-br from-orange-900/60 to-amber-900/60 border-orange-500/50';
-      case 'D': return 'bg-gradient-to-br from-red-900/60 to-pink-900/60 border-red-500/50';
-      default: return 'bg-gradient-to-br from-gray-900/60 to-slate-900/60 border-gray-500/50';
-    }
-  };
-
-  const getGradeTitle = (grade: string) => {
-    switch (grade) {
-      case 'S': return '至高の境地';
-      case 'A': return '達人の域';
-      case 'B': return '熟練者';
-      case 'C': return '学習者';
-      case 'D': return '修行中';
-      default: return '挑戦者';
-    }
-  };
 
   return (
     <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl shadow-2xl p-8 max-w-3xl mx-auto text-center border border-red-900/50 backdrop-blur-sm animate-creepy-pulse">

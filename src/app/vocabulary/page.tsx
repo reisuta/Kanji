@@ -3,6 +3,12 @@
 import React, { useState, useMemo } from 'react'
 import { questionBank } from '@/data/questionBank'
 import { useRouter } from 'next/navigation'
+import {
+  typeColor,
+  filterQuestions,
+  typeOptions,
+  difficultyOptions,
+} from './VocabularyFilter.res.mjs'
 
 type FilterType = 'all' | 'reading' | 'writing' | 'meaning' | 'idiom' | 'antonym' | 'synonym' | 'usage'
 type FilterDifficulty = 'all' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
@@ -14,49 +20,16 @@ export default function VocabularyPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedQuestion, setSelectedQuestion] = useState<typeof questionBank[0] | null>(null)
 
-  const typeColorMap: Record<string, string> = {
-    reading: 'bg-blue-500',
-    writing: 'bg-green-500',
-    meaning: 'bg-purple-500',
-    idiom: 'bg-orange-500',
-    antonym: 'bg-red-500',
-    synonym: 'bg-yellow-500',
-    usage: 'bg-pink-500',
-    fourCharacter: 'bg-indigo-500'
-  }
-
-  const filteredQuestions = useMemo(() => {
-    return questionBank.filter(question => {
-      const matchesType = typeFilter === 'all' || question.type === typeFilter
-      const matchesDifficulty = difficultyFilter === 'all' || question.difficulty === difficultyFilter
-      const matchesSearch = searchTerm === '' ||
-        question.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        String(question.correctAnswer).toLowerCase().includes(searchTerm.toLowerCase())
-
-      return matchesType && matchesDifficulty && matchesSearch
-    })
-  }, [typeFilter, difficultyFilter, searchTerm])
-
-  const typeOptions: { value: FilterType; label: string }[] = [
-    { value: 'all', label: 'すべて' },
-    { value: 'reading', label: '読み' },
-    { value: 'writing', label: '書き' },
-    { value: 'meaning', label: '意味' },
-    { value: 'idiom', label: '熟語' },
-    { value: 'antonym', label: '対義語' },
-    { value: 'synonym', label: '類義語' },
-    { value: 'usage', label: '用法' },
-  ]
-
-  const difficultyOptions: { value: FilterDifficulty; label: string }[] = [
-    { value: 'all', label: 'すべて' },
-    { value: 6, label: '6' },
-    { value: 5, label: '5' },
-    { value: 4, label: '4' },
-    { value: 3, label: '3' },
-    { value: 2, label: '2' },
-    { value: 1, label: '1' },
-  ]
+  const filteredQuestions = useMemo(
+    () =>
+      filterQuestions(
+        questionBank,
+        typeFilter,
+        difficultyFilter === 'all' ? 'all' : String(difficultyFilter),
+        searchTerm,
+      ),
+    [typeFilter, difficultyFilter, searchTerm],
+  )
 
   return (
     <div className="min-h-screen bg-white">
@@ -135,7 +108,7 @@ export default function VocabularyPage() {
               className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
             >
               <div className="flex justify-between items-start mb-4">
-                <span className={`text-base font-medium text-white px-4 py-2 rounded ${typeColorMap[question.type] || 'bg-gray-500'}`}>
+                <span className={`text-base font-medium text-white px-4 py-2 rounded ${typeColor(question.type)}`}>
                   {question.type}
                 </span>
                 <span className="text-base font-medium text-gray-600 bg-gray-100 px-4 py-2 rounded">
@@ -183,7 +156,7 @@ export default function VocabularyPage() {
           >
             <div className="flex justify-between items-start mb-6">
               <div className="flex items-center gap-4">
-                <span className={`text-lg font-medium text-white px-5 py-2 rounded ${typeColorMap[selectedQuestion.type] || 'bg-gray-500'}`}>
+                <span className={`text-lg font-medium text-white px-5 py-2 rounded ${typeColor(selectedQuestion.type)}`}>
                   {selectedQuestion.type}
                 </span>
                 <span className="text-lg font-medium text-gray-600 bg-gray-100 px-5 py-2 rounded">

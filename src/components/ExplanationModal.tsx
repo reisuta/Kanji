@@ -1,6 +1,8 @@
 'use client';
 
 import { Question } from '@/types/question';
+import { getQuestionTypeLabel } from './QuestionLabels.res.mjs';
+import { isAnswerCorrect } from '@/hooks/QuizState.res.mjs';
 
 interface ExplanationModalProps {
   questions: Question[];
@@ -16,17 +18,6 @@ export default function ExplanationModal({
   onClose,
 }: ExplanationModalProps) {
   if (!isOpen) return null;
-
-  const getQuestionTypeLabel = (type: string) => {
-    switch (type) {
-      case 'reading': return '読み';
-      case 'writing': return '書き';
-      case 'meaning': return '意味';
-      case 'idiom': return '慣用句';
-      case 'fourCharacter': return '四字熟語';
-      default: return type;
-    }
-  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 z-50">
@@ -49,9 +40,7 @@ export default function ExplanationModal({
         <div className="p-6 space-y-8">
           {questions.map((question, index) => {
             const userAnswer = userAnswers[index];
-            const isCorrect = Array.isArray(question.correctAnswer)
-              ? question.correctAnswer.includes(userAnswer)
-              : userAnswer === question.correctAnswer;
+            const isCorrect = isAnswerCorrect(userAnswer, question.correctAnswer);
 
             return (
               <div
@@ -91,9 +80,7 @@ export default function ExplanationModal({
                 <div className="grid gap-3 mb-4">
                   {question.choices?.map((choice, choiceIndex) => {
                     const isUserChoice = choice === userAnswer;
-                    const isCorrectChoice = Array.isArray(question.correctAnswer)
-                      ? question.correctAnswer.includes(choice)
-                      : choice === question.correctAnswer;
+                    const isCorrectChoice = isAnswerCorrect(choice, question.correctAnswer);
                     let choiceClass = 'bg-gray-800 border-gray-600 text-gray-300';
 
                     if (isCorrectChoice) {
