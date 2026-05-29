@@ -8,6 +8,18 @@ import {
   excludeByIds,
   computeStats,
 } from './QuestionFilters.res.mjs';
+import {
+  build,
+  getById,
+  getByType,
+  getByDifficultyExact,
+  getByDifficultyRange,
+  getAll,
+  totalCount,
+  availableTypes,
+  availableDifficulties,
+  QuestionSelectorT,
+} from './QuestionSelector.res.mjs';
 
 export interface SelectionOptions {
   count?: number;
@@ -25,34 +37,10 @@ export interface QuestionStats {
 }
 
 export class QuestionSelector {
-  private questions: Question[];
-  private questionMap: Map<string, Question> = new Map();
-  private typeMap: Map<Question['type'], Question[]> = new Map();
-  private difficultyMap: Map<number, Question[]> = new Map();
+  private inner: QuestionSelectorT;
 
   constructor(questions: Question[] = questionBank) {
-    this.questions = questions;
-    this.buildIndexes();
-  }
-
-  private buildIndexes(): void {
-    this.questionMap = new Map();
-    this.typeMap = new Map();
-    this.difficultyMap = new Map();
-
-    this.questions.forEach(question => {
-      this.questionMap.set(question.id, question);
-
-      if (!this.typeMap.has(question.type)) {
-        this.typeMap.set(question.type, []);
-      }
-      this.typeMap.get(question.type)!.push(question);
-
-      if (!this.difficultyMap.has(question.difficulty)) {
-        this.difficultyMap.set(question.difficulty, []);
-      }
-      this.difficultyMap.get(question.difficulty)!.push(question);
-    });
+    this.inner = build(questions);
   }
 
   getRandomQuestions(options: SelectionOptions = {}): Question[] {
@@ -66,8 +54,8 @@ export class QuestionSelector {
 
     let candidates: Question[] =
       types && types.length > 0
-        ? filterByTypes(this.questions, types)
-        : [...this.questions];
+        ? filterByTypes(getAll(this.inner), types)
+        : getAll(this.inner);
 
     if (difficulty !== undefined) {
       candidates =
@@ -88,44 +76,40 @@ export class QuestionSelector {
   }
 
   getQuestionById(id: string): Question | undefined {
-    return this.questionMap.get(id);
+    return getById(this.inner, id);
   }
 
   getQuestionsByType(type: Question['type']): Question[] {
-    return [...(this.typeMap.get(type) || [])];
+    return getByType(this.inner, type);
   }
 
   getQuestionsByDifficulty(
     difficulty: number | { min: number; max: number }
   ): Question[] {
     if (typeof difficulty === 'number') {
-      return [...(this.difficultyMap.get(difficulty) || [])];
+      return getByDifficultyExact(this.inner, difficulty);
     }
-    const questions: Question[] = [];
-    for (let d = difficulty.min; d <= difficulty.max; d++) {
-      questions.push(...(this.difficultyMap.get(d) || []));
-    }
-    return questions;
+    return getByDifficultyRange(this.inner, difficulty.min, difficulty.max);
   }
 
   getAllQuestions(): Question[] {
-    return [...this.questions];
+    return getAll(this.inner);
   }
 
   getStats(): QuestionStats {
-    return computeStats(this.questions) as QuestionStats;
+    return computeStats(getAll(this.inner)) as QuestionStats;
   }
 
   getTotalCount(): number {
-    return this.questions.length;
+    return totalCount(this.inner);
   }
 
   getAvailableTypes(): Question['type'][] {
-    return Array.from(this.typeMap.keys());
+    return availableTypes(this.inner);
   }
 
   getAvailableDifficulties(): number[] {
-    return Array.from(this.difficultyMap.keys()).sort((a, b) => a - b);
+    return availableDifficulties(this.inner);
   }
 }
 

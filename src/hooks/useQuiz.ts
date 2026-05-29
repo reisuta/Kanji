@@ -1,76 +1,45 @@
 import { useState, useCallback } from 'react';
 import { Question, QuizState, QuizResult } from '@/types/question';
+import {
+  init,
+  submitAnswer as submitAnswerPure,
+  goToNext,
+  goToPrevious,
+  computeResult,
+} from './QuizState.res.mjs';
 
 export const useQuiz = (questions: Question[]) => {
-  const [quizState, setQuizState] = useState<QuizState>({
-    currentQuestionIndex: 0,
-    questions,
-    userAnswers: [],
-    score: 0,
-    isCompleted: false,
-  });
+  const [quizState, setQuizState] = useState<QuizState>(
+    () => init(questions) as QuizState,
+  );
 
   const [startTime] = useState<number>(Date.now());
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
 
-  const submitAnswer = useCallback((answer: string) => {
-    setQuizState(prev => {
-      const newUserAnswers = [...prev.userAnswers, answer];
-      const isCorrect = Array.isArray(currentQuestion.correctAnswer)
-        ? currentQuestion.correctAnswer.includes(answer)
-        : answer === currentQuestion.correctAnswer;
-      const newScore = prev.score + (isCorrect ? 1 : 0);
-      const nextIndex = prev.currentQuestionIndex + 1;
-      const isCompleted = nextIndex >= prev.questions.length;
+  const submitAnswer = useCallback(
+    (answer: string) => {
+      setQuizState(prev => submitAnswerPure(prev, currentQuestion.correctAnswer, answer) as QuizState);
+    },
+    [currentQuestion?.correctAnswer],
+  );
 
-      return {
-        ...prev,
-        userAnswers: newUserAnswers,
-        score: newScore,
-        currentQuestionIndex: nextIndex,
-        isCompleted,
-      };
-    });
-  }, [currentQuestion?.correctAnswer]);
-
-  const getResult = useCallback((): QuizResult => {
-    const timeTaken = Math.floor((Date.now() - startTime) / 1000);
-    return {
-      score: Math.round((quizState.score / quizState.questions.length) * 100),
-      totalQuestions: quizState.questions.length,
-      correctAnswers: quizState.score,
-      timeTaken,
-    };
-  }, [quizState.score, quizState.questions.length, startTime]);
+  const getResult = useCallback(
+    (): QuizResult => computeResult(quizState, startTime, Date.now()),
+    [quizState, startTime],
+  );
 
   const resetQuiz = useCallback(() => {
-    setQuizState({
-      currentQuestionIndex: 0,
-      questions,
-      userAnswers: [],
-      score: 0,
-      isCompleted: false,
-    });
+    setQuizState(init(questions) as QuizState);
   }, [questions]);
 
   const goToNextQuestion = useCallback(() => {
-    if (quizState.currentQuestionIndex < quizState.questions.length - 1) {
-      setQuizState(prev => ({
-        ...prev,
-        currentQuestionIndex: prev.currentQuestionIndex + 1,
-      }));
-    }
-  }, [quizState.currentQuestionIndex, quizState.questions.length]);
+    setQuizState(prev => goToNext(prev) as QuizState);
+  }, []);
 
   const goToPreviousQuestion = useCallback(() => {
-    if (quizState.currentQuestionIndex > 0) {
-      setQuizState(prev => ({
-        ...prev,
-        currentQuestionIndex: prev.currentQuestionIndex - 1,
-      }));
-    }
-  }, [quizState.currentQuestionIndex]);
+    setQuizState(prev => goToPrevious(prev) as QuizState);
+  }, []);
 
   return {
     quizState,
