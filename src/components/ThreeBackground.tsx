@@ -2,6 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import {
+  bgShapeFrame,
+  bgBrushStrokeX,
+  bgCameraFrame,
+  brushCurvePoints,
+  sphericalToCartesian,
+} from './ThreeAnimations.res.mjs';
+import { inkColor, bgShapeColor } from './ThreeColors.res.mjs';
 
 export default function ThreeBackground() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -29,29 +37,18 @@ export default function ThreeBackground() {
     const inkSizes = new Float32Array(inkParticleCount);
 
     for (let i = 0; i < inkParticleCount * 3; i += 3) {
-      // より重厚感のある配置
       const radius = Math.random() * 120 + 30;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.random() * Math.PI;
-      
-      inkPositions[i] = radius * Math.sin(phi) * Math.cos(theta);
-      inkPositions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      inkPositions[i + 2] = radius * Math.cos(phi);
+      const p = sphericalToCartesian(radius, theta, phi);
+      inkPositions[i] = p.x;
+      inkPositions[i + 1] = p.y;
+      inkPositions[i + 2] = p.z;
 
-      // 深い色調
-      const colorChoice = Math.random();
+      const inkHsl = inkColor(Math.random(), Math.random(), Math.random());
       const color = new THREE.Color();
-      if (colorChoice < 0.4) {
-        // 金色系
-        color.setHSL(0.1 + Math.random() * 0.1, 0.8, 0.3 + Math.random() * 0.3);
-      } else if (colorChoice < 0.7) {
-        // 赤色系
-        color.setHSL(0.0 + Math.random() * 0.05, 0.9, 0.2 + Math.random() * 0.3);
-      } else {
-        // 深い紫系
-        color.setHSL(0.8 + Math.random() * 0.1, 0.7, 0.15 + Math.random() * 0.2);
-      }
-      
+      color.setHSL(inkHsl.hue, inkHsl.saturation, inkHsl.lightness);
+
       inkColors[i] = color.r;
       inkColors[i + 1] = color.g;
       inkColors[i + 2] = color.b;
@@ -86,12 +83,9 @@ export default function ThreeBackground() {
         Math.random() * 2 + 0.5
       );
       
+      const kanjiHsl = bgShapeColor(Math.random());
       const material = new THREE.MeshBasicMaterial({
-        color: new THREE.Color().setHSL(
-          Math.random() < 0.5 ? 0.1 : 0.0, // 金色か赤色
-          0.8,
-          0.3
-        ),
+        color: new THREE.Color().setHSL(kanjiHsl.hue, kanjiHsl.saturation, kanjiHsl.lightness),
         transparent: true,
         opacity: 0.15,
         wireframe: Math.random() < 0.3,
@@ -115,14 +109,7 @@ export default function ThreeBackground() {
 
     // 筆線を模したライン
     const lineGeometry = new THREE.BufferGeometry();
-    const linePoints = [];
-    for (let i = 0; i < 50; i++) {
-      const t = i / 49;
-      const x = Math.sin(t * Math.PI * 4) * 30;
-      const y = Math.cos(t * Math.PI * 2) * 20;
-      const z = t * 40 - 20;
-      linePoints.push(new THREE.Vector3(x, y, z));
-    }
+    const linePoints = brushCurvePoints(50).map(p => new THREE.Vector3(p.x, p.y, p.z));
     lineGeometry.setFromPoints(linePoints);
     
     const lineMaterial = new THREE.LineBasicMaterial({
@@ -144,25 +131,23 @@ export default function ThreeBackground() {
 
       const time = Date.now() * 0.001;
 
-      // パーティクルの回転（より荘厳に）
       inkParticleSystem.rotation.x += 0.0005;
       inkParticleSystem.rotation.y += 0.001;
 
-      // 漢字形状のアニメーション
       kanjiShapes.forEach((shape, index) => {
-        shape.rotation.x += 0.005 * (index % 2 === 0 ? 1 : -1);
-        shape.rotation.y += 0.003 * (index % 3 === 0 ? 1 : -1);
-        shape.position.x += Math.sin(time * 0.5 + index) * 0.02;
-        shape.position.y += Math.cos(time * 0.3 + index) * 0.015;
+        const f = bgShapeFrame(time, index);
+        shape.rotation.x += f.rotationDeltaX;
+        shape.rotation.y += f.rotationDeltaY;
+        shape.position.x += f.positionDeltaX;
+        shape.position.y += f.positionDeltaY;
       });
 
-      // 筆線のアニメーション
       brushStroke.rotation.z += 0.002;
-      brushStroke.position.x = Math.sin(time * 0.2) * 10;
+      brushStroke.position.x = bgBrushStrokeX(time);
 
-      // カメラの微細な動き
-      camera.position.x = Math.sin(time * 0.1) * 2;
-      camera.position.y = Math.cos(time * 0.15) * 1;
+      const cam = bgCameraFrame(time);
+      camera.position.x = cam.x;
+      camera.position.y = cam.y;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
