@@ -29,6 +29,7 @@
     "@eslint/eslintrc": "^3",
     "@lhci/cli": "^0.15.0",
     "@rescript/core": "^1.6.1",
+    "@rescript/react": "^0.15.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

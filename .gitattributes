@@ -1,1 +1,3 @@
 src/data/questionBank.ts linguist-detectable=false
+src/__tests__/** linguist-detectable=false
+**/*.res.d.mts linguist-detectable=false
