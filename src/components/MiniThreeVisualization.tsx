@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { miniShapeFrame, miniLightFrame } from './ThreeAnimations.res.mjs';
+import { miniShapeColor, miniBloodColor } from './ThreeColors.res.mjs';
 
 interface MiniThreeVisualizationProps {
   width?: number;
@@ -60,12 +62,9 @@ export default function MiniThreeVisualization({
         );
       }
       
+      const hsl = miniShapeColor(Math.random(), Math.random());
       const material = new THREE.MeshBasicMaterial({
-        color: new THREE.Color().setHSL(
-          Math.random() < 0.7 ? 0.0 : 0.1, // 赤色系がメイン
-          0.9,
-          0.2 + Math.random() * 0.3
-        ),
+        color: new THREE.Color().setHSL(hsl.hue, hsl.saturation, hsl.lightness),
         transparent: true,
         opacity: 0.6 + Math.random() * 0.4,
         wireframe: Math.random() < 0.4,
@@ -98,9 +97,9 @@ export default function MiniThreeVisualization({
       bloodPositions[i + 1] = (Math.random() - 0.5) * 30;
       bloodPositions[i + 2] = (Math.random() - 0.5) * 30;
 
-      // 血の色調
+      const bloodHsl = miniBloodColor(Math.random());
       const color = new THREE.Color();
-      color.setHSL(0.0, 0.9, 0.1 + Math.random() * 0.3);
+      color.setHSL(bloodHsl.hue, bloodHsl.saturation, bloodHsl.lightness);
       bloodColors[i] = color.r;
       bloodColors[i + 1] = color.g;
       bloodColors[i + 2] = color.b;
@@ -140,34 +139,26 @@ export default function MiniThreeVisualization({
 
       const time = Date.now() * 0.001;
 
-      // 恐ろしいアニメーション
       kanjiShapes.forEach((shape, index) => {
-        // 不規則な回転
-        shape.rotation.x += 0.01 * (index % 3 === 0 ? 1 : -1) * (1 + Math.sin(time + index) * 0.5);
-        shape.rotation.y += 0.008 * (index % 2 === 0 ? 1 : -1) * (1 + Math.cos(time * 0.7 + index) * 0.3);
-        shape.rotation.z += 0.005 * Math.sin(time * 1.2 + index);
-        
-        // 恐怖的な浮遊
-        shape.position.x += Math.sin(time * 0.3 + index) * 0.05;
-        shape.position.y += Math.cos(time * 0.4 + index * 0.7) * 0.03;
-        shape.position.z += Math.sin(time * 0.2 + index * 1.3) * 0.04;
-
-        // ランダムなスケール変化
-        const scale = 1 + Math.sin(time * 2 + index) * 0.2;
-        shape.scale.setScalar(scale);
+        const f = miniShapeFrame(time, index);
+        shape.rotation.x += f.rotationDeltaX;
+        shape.rotation.y += f.rotationDeltaY;
+        shape.rotation.z += f.rotationDeltaZ;
+        shape.position.x += f.positionDeltaX;
+        shape.position.y += f.positionDeltaY;
+        shape.position.z += f.positionDeltaZ;
+        shape.scale.setScalar(f.scale);
       });
 
-      // 血のパーティクル回転
       bloodParticleSystem.rotation.x += 0.002;
       bloodParticleSystem.rotation.y += 0.003;
 
-      // ライトの不気味な動き
-      pointLight.position.x = Math.sin(time * 0.5) * 15;
-      pointLight.position.y = Math.cos(time * 0.3) * 10;
-      pointLight.intensity = 1.5 + Math.sin(time * 3) * 0.5;
-
-      pointLight2.position.x = Math.cos(time * 0.4) * -12;
-      pointLight2.position.z = Math.sin(time * 0.6) * 8;
+      const lights = miniLightFrame(time);
+      pointLight.position.x = lights.light1X;
+      pointLight.position.y = lights.light1Y;
+      pointLight.intensity = lights.light1Intensity;
+      pointLight2.position.x = lights.light2X;
+      pointLight2.position.z = lights.light2Z;
 
       renderer.render(scene, camera);
     };

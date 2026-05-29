@@ -1,6 +1,7 @@
 'use client';
 
 import { Question } from '@/types/question';
+import { getQuestionTypeLabel } from './QuestionLabels.res.mjs';
 
 interface QuestionCardProps {
   question: Question;
@@ -17,17 +18,6 @@ export default function QuestionCard({
   onAnswer,
   selectedAnswer,
 }: QuestionCardProps) {
-  const getQuestionTypeLabel = (type: string) => {
-    switch (type) {
-      case 'reading': return '読み';
-      case 'writing': return '書き';
-      case 'meaning': return '意味';
-      case 'idiom': return '慣用句';
-      case 'fourCharacter': return '四字熟語';
-      default: return type;
-    }
-  };
-
   return (
     <div className="dead-gray-theme rounded-2xl shadow-2xl p-8 max-w-3xl mx-auto transform transition-all duration-300 hover:scale-105 dead-gray-border backdrop-blur-sm animate-gentle-flicker animate-slide-in-right">
       <div className="mb-8">
