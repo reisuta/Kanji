@@ -1,46 +1,54 @@
 import { render } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+// vitest 4 以降、arrow 関数実装の vi.fn は new できないため function で包む
+const { mockClass } = vi.hoisted(() => ({
+  mockClass: <T extends object>(factory: () => T) =>
+    vi.fn(function () {
+      return factory()
+    }),
+}))
+
 // Three.jsのモック
 vi.mock('three', () => ({
-  Scene: vi.fn(() => ({
+  Scene: mockClass(() => ({
     add: vi.fn()
   })),
-  PerspectiveCamera: vi.fn(() => ({
+  PerspectiveCamera: mockClass(() => ({
     aspect: 1,
     updateProjectionMatrix: vi.fn(),
     position: { set: vi.fn(), x: 0, y: 0, z: 0 },
     lookAt: vi.fn()
   })),
-  WebGLRenderer: vi.fn(() => ({
+  WebGLRenderer: mockClass(() => ({
     setSize: vi.fn(),
     setClearColor: vi.fn(),
     render: vi.fn(),
     dispose: vi.fn(),
     domElement: document.createElement('canvas')
   })),
-  BufferGeometry: vi.fn(() => ({
+  BufferGeometry: mockClass(() => ({
     setAttribute: vi.fn()
   })),
   BufferAttribute: vi.fn(),
   PointsMaterial: vi.fn(),
-  Points: vi.fn(() => ({
+  Points: mockClass(() => ({
     rotation: { x: 0, y: 0, z: 0 }
   })),
   ConeGeometry: vi.fn(),
   BoxGeometry: vi.fn(),
   SphereGeometry: vi.fn(),
   MeshBasicMaterial: vi.fn(),
-  Mesh: vi.fn(() => ({
+  Mesh: mockClass(() => ({
     position: { set: vi.fn(), x: 0, y: 0, z: 0 },
     rotation: { set: vi.fn(), x: 0, y: 0, z: 0 },
     scale: { setScalar: vi.fn() }
   })),
-  PointLight: vi.fn(() => ({
+  PointLight: mockClass(() => ({
     position: { set: vi.fn(), x: 0, y: 0, z: 0 },
     intensity: 1
   })),
-  Color: vi.fn(() => ({
+  Color: mockClass(() => ({
     setHSL: vi.fn(),
     r: 1,
     g: 0,
