@@ -23,7 +23,7 @@
     "lhci:desktop": "lhci autorun --preset=desktop"
   },
   "dependencies": {
-    "next": "15.5.29",
+    "next": "16.4.5",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
@@ -44,7 +44,7 @@
     "@vitest/coverage-v8": "^5.1.0",
     "@vitest/ui": "^5.1.0",
     "eslint": "^9",
-    "eslint-config-next": "15.5.29",
+    "eslint-config-next": "16.4.5",
     "jsdom": "^31.0.0",
     "rescript": "^12.3.0",
     "tailwindcss": "^4",
